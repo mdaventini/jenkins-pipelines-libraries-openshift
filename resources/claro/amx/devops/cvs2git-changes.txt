@@ -1,0 +1,4 @@
+Replace './../../../../core/' with './../../','s+\.\./\.\./core/++g'
+Replace './../../../../cust/' with './../../','s+\.\./\.\./cust/++g'
+Replace ' #'  with '\n#','s+ #+\n#+g'
+Replace '(PC_SOURCES$' with '(PC_SOURCES)$','s+PC_SOURCES$+PC_SOURCES)+g'

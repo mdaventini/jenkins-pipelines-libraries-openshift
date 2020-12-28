@@ -1,0 +1,219 @@
+kind: Template
+apiVersion: v1
+metadata:
+    name: new-app-template-java-bkend
+labels:
+  new-app-template: ${PARAM_APP_NAME}-template
+objects:
+###############################################
+#             Image Stream
+###############################################
+- kind: ImageStream
+  apiVersion: image.openshift.io/v1
+  metadata:
+    labels:
+      template: ${PARAM_APP_NAME}-template
+      app: ${PARAM_APP_NAME}
+    name: ${PARAM_APP_NAME}
+    annotations:
+      description: Realiza un seguimiento de los cambios en la imagen de la aplicación
+###############################################
+#           Build Config S2I
+###############################################
+- kind: BuildConfig
+  apiVersion: build.openshift.io/v1
+  metadata:
+    labels:
+      template: ${PARAM_APP_NAME}-template
+      build: ${PARAM_APP_NAME}
+    name: ${PARAM_APP_NAME}-s2i
+    annotations:
+      description: Define cómo construir la aplicación
+      template.alpha.openshift.io/wait-for-ready: 'true'
+  spec:
+    source:
+      type: Binary
+    strategy:
+      type: "Source"
+      sourceStrategy:
+        env:
+        - name: JAVA_INITIAL_MEM_RATIO
+          value: '100'
+        - name: JAVA_MAX_MEM_RATIO
+          value: '50'
+        from:
+          kind: "ImageStreamTag"
+          namespace: openshift
+          name: openjdk-11-rhel7:1.1
+        scripts: http://ribera.claro.amx:8081/artifactory/local-openshift-release/scripts/s2i/openjdk18
+    type: "Source"
+    output:
+      to:
+        kind: "ImageStreamTag"
+        name: ${PARAM_APP_NAME}:latest
+###############################################
+#            Deployment Config
+###############################################
+- kind: DeploymentConfig
+  apiVersion: apps.openshift.io/v1
+  metadata:
+    name: ${PARAM_APP_NAME}
+    labels:
+      template: ${PARAM_APP_NAME}-template
+      app: ${PARAM_APP_NAME}
+  spec:
+    replicas: 2
+    strategy:
+      type: Rolling
+      rollingParams:
+        updatePeriodSeconds: 1
+        intervalSeconds: 1
+        timeoutSeconds: 600
+        maxUnavailable: 25%
+        maxSurge: 25%
+      resources: {}
+    template:
+      metadata:
+        labels:
+          app: ${PARAM_APP_NAME}
+          deploymentconfig: ${PARAM_APP_NAME}
+          template: ${PARAM_APP_NAME}-template
+      spec:
+        containers:
+        - name: ${PARAM_APP_NAME}
+          env:
+          - name: TZ
+            value: ${TZ}
+          image: ${REGISTRY_URL}/${PARAM_NAMESPACE}/${PARAM_APP_NAME}:${PARAM_DC_TAG}
+          imagePullPolicy: Always
+          ports:
+          - containerPort: 8080
+            protocol: TCP
+          - containerPort: 8443
+            protocol: TCP
+          - containerPort: 8778
+            protocol: TCP
+          livenessProbe:
+            failureThreshold: 3
+            httpGet:
+              path: /manage/health
+              port: 8080
+              scheme: HTTP
+            initialDelaySeconds: 10
+            periodSeconds: 10
+            successThreshold: 1
+            timeoutSeconds: 2
+          readinessProbe:
+            failureThreshold: 3
+            httpGet:
+              path: /manage/health
+              port: 8080
+              scheme: HTTP
+            initialDelaySeconds: 10
+            periodSeconds: 10
+            successThreshold: 1
+            timeoutSeconds: 2
+          resources: {}
+          terminationMessagePath: /dev/termination-log
+        dnsPolicy: ClusterFirst
+        restartPolicy: Always
+        schedulerName: default-scheduler
+        securityContext: {}
+        terminationGracePeriodSeconds: 30
+    triggers:
+    - type: ConfigChange
+    - type: ImageChange
+      imageChangeParams:
+        automatic: false
+        containerNames:
+        - ${PARAM_APP_NAME}
+        from:
+          kind: ImageStreamTag
+          namespace: ${PARAM_NAMESPACE}
+          name: ${PARAM_APP_NAME}:${PARAM_DC_TAG}
+###############################################
+#             Service
+###############################################
+- kind: Service
+  apiVersion: v1
+  metadata:
+    labels:
+      template: ${PARAM_APP_NAME}-template
+      app: ${PARAM_APP_NAME}
+    name: ${PARAM_APP_NAME}
+    annotations:
+      description: Expone y equilibra la carga de los módulos de aplicación
+  spec:
+    ports:
+    - name: 8080-tcp
+      port: 8080
+      protocol: TCP
+      targetPort: 8080
+    - name: 8443-tcp
+      port: 8443
+      protocol: TCP
+      targetPort: 8443
+    - name: 8778-tcp
+      port: 8778
+      protocol: TCP
+      targetPort: 8778
+    selector:
+      deploymentconfig: ${PARAM_APP_NAME}
+    sessionAffinity: None
+    type: ClusterIP
+###############################################
+#               Route
+###############################################
+- kind: Route
+  apiVersion: route.openshift.io/v1
+  metadata:
+    labels:
+      template: ${PARAM_APP_NAME}-template
+      app: ${PARAM_APP_NAME}
+    name: ${PARAM_APP_NAME}-manage
+    annotations:
+      description: Publica Ruta para acceso externo al servicio para su monitoreo
+  spec:
+    path: /manage
+    port:
+      targetPort: 8080-tcp
+    to:
+      kind: Service
+      name: ${PARAM_APP_NAME}
+- apiVersion: route.openshift.io/v1
+  kind: Route
+  metadata:
+    labels:
+      app: ${PARAM_APP_NAME}
+      new-app-template: ${PARAM_APP_NAME}-template
+      template: ${PARAM_APP_NAME}-template
+    name: ${PARAM_APP_NAME}
+    namespace: ${PARAM_NAMESPACE}
+  spec:
+    port:
+      targetPort: 8080-tcp
+    to:
+      kind: Service
+      name: ${PARAM_APP_NAME}
+      weight: 100
+    wildcardPolicy: None
+parameters:
+- name: PARAM_NAMESPACE
+  displayname: Project Name (Namespace)
+  required: true
+  description: Nombre del proyecto (Namespace)
+- name: PARAM_APP_NAME
+  displayname: Application Name
+  description: Name of the application to be created
+- name: PARAM_DC_TAG
+  displayname: Tag a la imagen a usar
+  value: latest
+  description: tag usado para identificar la imagen a usar, latest en desarrollo, stage en testing y prod en producción
+- name: TZ
+  displayname: Timezone
+  required: true
+  description: Timezone a utilizar al momento del deploy
+- name: REGISTRY_URL
+  displayname: Timezone
+  required: true
+  description: Docker IS Registry URL

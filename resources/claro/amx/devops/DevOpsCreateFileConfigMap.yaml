@@ -1,0 +1,15 @@
+---
+fileDsl: claro/amx/devops/pipelineJobWithCpsScmFlowDefinition.dsl
+nameJob: DevOpsCreateFileConfigMap
+descriptionJob: "CreateFileConfigMap"
+sshCredentials: ssh_jenkins-pc
+factoryScript: vars/jenkinsfile-create-file-configmap
+parameters: |-
+  parameters {
+    stringParam {
+      name('JIRA_ID')
+      description('Jira Artifact or Configuration ID')
+      defaultValue('DOATR-20')
+      trim(true)
+    }
+  }

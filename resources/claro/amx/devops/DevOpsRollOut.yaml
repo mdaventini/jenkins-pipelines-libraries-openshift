@@ -1,0 +1,57 @@
+---
+fileDsl: claro/amx/devops/pipelineJob.dsl
+nameJob: DevOpsRollOut
+descriptionJob: "RollOut to testing and production
+  First build shcedules other countries if required
+  This job assumes a release exists in OpenShift (created with DevOpsRelease job)"
+sshRepo: ~
+sshCredentials: ~
+httpCredentials: ~
+branchesRepo: ~
+factoryScript: |-
+  @Library(['devops-openshift-libraries'])_
+  PipelineRollout('INFO')
+buildStrategies: ~
+scan: false
+parameters: |-
+  parameters {
+    stringParam {
+      name('JIRA_ID')
+      description('Clave que identifica la incidencia de Jira que solicita la promoción')
+      defaultValue('LABRLS-753')
+      trim(true)
+    }
+    extendedChoice {
+      name('Country')
+      description('Country to rollout to (hidden).')
+      quoteValue(false)
+      type('PT_HIDDEN')
+      value('')
+      visibleItemCount(100)
+      projectName('')
+      propertyFile('')
+      groovyScript('')
+      groovyScriptFile('')
+      bindings('')
+      groovyClasspath('')
+      propertyKey('')
+      defaultValue('')
+      defaultPropertyFile('')
+      defaultGroovyScript('')
+      defaultGroovyScriptFile('')
+      defaultBindings('')
+      defaultGroovyClasspath('')
+      defaultPropertyKey('')
+      descriptionPropertyValue('')
+      descriptionPropertyFile('')
+      descriptionGroovyScript('')
+      descriptionGroovyScriptFile('')
+      descriptionBindings('')
+      descriptionGroovyClasspath('')
+      descriptionPropertyKey('')
+      javascriptFile('')
+      javascript('')
+      saveJSONParameterToFile(false)
+      multiSelectDelimiter('')
+    }
+  }

@@ -1,0 +1,28 @@
+---
+fileDsl: claro/amx/devops/pipelineJob.dsl
+nameJob: DevOpsCreateProject
+descriptionJob: "Crea o modifica una carpeta para un ProjectKey, agregando jobs por proyecto"
+sshRepo: ~
+sshCredentials: ~
+httpCredentials: ~
+branchesRepo: ~
+factoryScript: |-
+  @Library(['devops-openshift-libraries'])_
+  PipelineCreateProject('INFO')
+buildStrategies: ~
+scan: false
+parameters: |-
+  parameters {
+    stringParam {
+      name('Project')
+      description('Clave que identifica al proyecto en Bitbucket')
+      defaultValue('ADI')
+      trim(true)
+    }
+    stringParam {
+      name('emailLeader')
+      description('e-mail del Líder Técnico')
+      defaultValue('')
+      trim(true)
+    }
+  }

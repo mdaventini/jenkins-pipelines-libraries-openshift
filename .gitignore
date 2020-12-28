@@ -1,0 +1,45 @@
+### Gradle ###
+.gradle
+/build/
+out
+target
+
+### STS ###
+.apt_generated
+.classpath
+.factorypath
+.project
+.settings
+.springBeans
+
+### Eclipse ###
+bin/
+
+### IntelliJ IDEA ###
+.idea
+*.iws
+*.iml
+*.ipr
+
+### Visual Studio Code ###
+.vscode
+
+### NetBeans ###
+nbproject/private/
+build/
+nbbuild/
+dist/
+nbdist/
+.nb-gradle/
+
+### Mac ###
+.DS_Store
+
+*.db.DS_Store
+
+### generated querydsl ###
+wfm-microservices/wfm-agenda/src/querydsl/
+version.txt
+
+devops-openshift-libraries/vars/*.groovy
+devops-openshift-libraries/vars/*.txt

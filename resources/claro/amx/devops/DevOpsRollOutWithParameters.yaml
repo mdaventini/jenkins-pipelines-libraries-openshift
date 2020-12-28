@@ -1,0 +1,121 @@
+---
+fileDsl: claro/amx/devops/pipelineJob.dsl
+nameJob: DevOpsRolloutWithParameters
+descriptionJob: "RollOut using parameters.
+  This job assumes a release exists in OpenShift (created with DevOpsRelease job)"
+sshRepo: ~
+sshCredentials: ~
+httpCredentials: ~
+branchesRepo: ~
+factoryScript: |-
+  @Library(['devops-openshift-libraries'])_
+  PipelineRolloutWithParameters('INFO')
+buildStrategies: ~
+scan: false
+firstBuild: true
+initParameters: true
+parameters: |-
+  parameters {
+    extendedChoice {
+      name('CLUSTER')
+      description('Cluster to rollout to')
+      bindings('choicesCluster=\${choicesCluster}')
+      groovyScript("return choicesCluster.tokenize(',[]')")
+      quoteValue(false)
+      type('PT_SINGLE_SELECT')
+      value('')
+      visibleItemCount(100)
+      projectName('')
+      propertyFile('')
+      groovyScriptFile('')
+      groovyClasspath('')
+      propertyKey('')
+      defaultValue('')
+      defaultPropertyFile('')
+      defaultGroovyScript('')
+      defaultGroovyScriptFile('')
+      defaultBindings('')
+      defaultGroovyClasspath('')
+      defaultPropertyKey('')
+      descriptionPropertyValue('')
+      descriptionPropertyFile('')
+      descriptionGroovyScript('')
+      descriptionGroovyScriptFile('')
+      descriptionBindings('')
+      descriptionGroovyClasspath('')
+      descriptionPropertyKey('')
+      javascriptFile('')
+      javascript('')
+      saveJSONParameterToFile(false)
+      multiSelectDelimiter('')
+    }
+    stringParam {
+      name('APP_NAME')
+      description('Nombre de la aplicación')
+      defaultValue('api-impuestos-backend')
+      trim(true)
+    }
+    stringParam {
+      name('NAMESPACE')
+      description('Namespace/proyecto de OpenShift donde se creará la aplicación')
+      defaultValue('prueba-pasajes')
+      trim(true)
+    }
+    extendedChoice {
+      name('COUNTRY')
+      description('Country to rollout to')
+      bindings('choicesCountry=\${choicesCountry}')
+      groovyScript("return choicesCountry.tokenize(',[]')")
+      quoteValue(false)
+      type('PT_SINGLE_SELECT')
+      value('')
+      visibleItemCount(100)
+      projectName('')
+      propertyFile('')
+      groovyScriptFile('')
+      groovyClasspath('')
+      propertyKey('')
+      defaultValue('')
+      defaultPropertyFile('')
+      defaultGroovyScript('')
+      defaultGroovyScriptFile('')
+      defaultBindings('')
+      defaultGroovyClasspath('')
+      defaultPropertyKey('')
+      descriptionPropertyValue('')
+      descriptionPropertyFile('')
+      descriptionGroovyScript('')
+      descriptionGroovyScriptFile('')
+      descriptionBindings('')
+      descriptionGroovyClasspath('')
+      descriptionPropertyKey('')
+      javascriptFile('')
+      javascript('')
+      saveJSONParameterToFile(false)
+      multiSelectDelimiter('')
+    }
+    stringParam {
+      name('GIT_PROYECT')
+      description('Clave del proyecto en bitbucket')
+      defaultValue('ndd')
+      trim(true)
+    }
+    stringParam {
+      name('GIT_TAG')
+      description('Tag en [proyecto]/container_infra')
+      defaultValue('api-impuestos-backend-1.0.1-RC.3')
+      trim(true)
+    }
+    stringParam {
+      name('GIT_CONFIG_REPO')
+      description('Nombre del repo con configs')
+      defaultValue('app-configuration')
+      trim(true)
+    }
+    stringParam {
+      name('GIT_CONFIG_REPO')
+      description('Path en repo con configs')
+      defaultValue('api-impuestos-backend-config')
+      trim(true)
+    }
+  }

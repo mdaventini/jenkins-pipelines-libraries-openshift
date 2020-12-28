@@ -1,0 +1,15 @@
+---
+fileDsl: claro/amx/devops/pipelineJobWithCpsScmFlowDefinition.dsl
+nameJob: DevOpsRelease
+descriptionJob: "Release"
+sshCredentials: ssh_jenkins-pc
+factoryScript: vars/jenkinsfile-release
+parameters: |-
+  parameters {
+    stringParam {
+      name('JIRA_ID')
+      description('Jira Issue ID to release')
+      defaultValue('LABRLS-753')
+      trim(true)
+    }
+  }

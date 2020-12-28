@@ -1,0 +1,33 @@
+---
+fileDsl: claro/amx/devops/pipelineJobWithCpsScmFlowDefinition.dsl
+nameJob: DevOpsGenerateInfra
+descriptionJob: "GenerateInfra"
+sshCredentials: ssh_jenkins-pc
+factoryScript: vars/jenkinsfile-generate-infra
+parameters: |-
+  parameters {
+    stringParam {
+      name('APP_NAME')
+      description('Nombre de la aplicación')
+      defaultValue('api-impuestos-backend')
+      trim(true)
+    }
+    stringParam {
+      name('NAMESPACE')
+      description('Namespace/proyecto de OpenShift donde se creará la aplicación')
+      defaultValue('prueba-pasajes')
+      trim(true)
+    }
+    stringParam {
+      name('GIT_PROJECT')
+      description('Clave del proyecto en bitbucket')
+      defaultValue('ndd')
+      trim(true)
+    }
+    stringParam {
+      name('JIRA_ID')
+      description('Jira Issue ID to release')
+      defaultValue('LABRLS-753')
+      trim(true)
+    }
+  }

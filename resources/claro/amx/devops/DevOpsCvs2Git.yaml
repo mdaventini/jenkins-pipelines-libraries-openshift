@@ -1,0 +1,34 @@
+---
+fileDsl: claro/amx/devops/pipelineJob.dsl
+nameJob: DevOpsCvs2Git
+descriptionJob: "CVS to Git migration"
+sshRepo: ~
+sshCredentials: ~
+httpCredentials: ~
+branchesRepo: ~
+factoryScript: |-
+  @Library(['devops-openshift-libraries'])_
+  PipelineCvs2Git('INFO')
+buildStrategies: ~
+scan: false
+parameters: |-
+  parameters {
+    stringParam {
+      name('MODULE')
+      description('CVS module. Example: core/include')
+      defaultValue('core/include')
+      trim(true)
+    }
+    stringParam {
+      name('Project')
+      description('Select destination project in Bitbucket Server. Example: TARPROC')
+      defaultValue('TARPROC')
+      trim(true)
+    }
+    stringParam {
+      name('emailLeader')
+      description('e-mail del Líder Técnico')
+      defaultValue('')
+      trim(true)
+    }
+  }

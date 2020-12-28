@@ -1,0 +1,20 @@
+---
+fileDsl: claro/amx/devops/pipelineJobWithCpsScmFlowDefinition.dsl
+nameJob: DevOpsUpdateConfig
+descriptionJob: "UpdateConfig"
+sshCredentials: ssh_jenkins-pc
+factoryScript: vars/jenkinsfile-update-config
+parameters: |-
+  parameters {
+    stringParam {
+      name('JIRA_ID')
+      description('Jira Artifact or Configuration ID')
+      defaultValue('DOATR-22')
+      trim(true)
+    }
+    choiceParam {
+      name('GenerateInfra')
+      description('Yes: ONLY GenerateInfra. No: Updates Config from BB to OS. Leave NO for testing and prod')
+      choices(['No', 'Yes'])
+    }
+  }

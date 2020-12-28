@@ -1,0 +1,56 @@
+---
+fileDsl: claro/amx/devops/pipelineJob.dsl
+nameJob: DevOpsListOS
+descriptionJob: "Lists Openshift configs based on a JIRA issueType Artefacto
+  The JIRA_ID must be issueType Artefacto and the git_proyect in Jira must be scmProjectKey"
+sshRepo: ~
+sshCredentials: ~
+httpCredentials: ~
+branchesRepo: ~
+factoryScript: |-
+  @Library(['devops-openshift-libraries'])_
+  PipelineListOS('INFO')
+buildStrategies: ~
+scan: false
+parameters: |-
+  parameters {
+    stringParam {
+      name('JIRA_ID')
+      description('Clave que identifica la incidencia en Jira de tipo "Artefacto"')
+      defaultValue('DOATR-13')
+      trim(true)
+    }
+    extendedChoice {
+      name('Country')
+      description('Country to rollout to (hidden).')
+      quoteValue(false)
+      type('PT_HIDDEN')
+      value('')
+      visibleItemCount(100)
+      projectName('')
+      propertyFile('')
+      groovyScript('')
+      groovyScriptFile('')
+      bindings('')
+      groovyClasspath('')
+      propertyKey('')
+      defaultValue('')
+      defaultPropertyFile('')
+      defaultGroovyScript('')
+      defaultGroovyScriptFile('')
+      defaultBindings('')
+      defaultGroovyClasspath('')
+      defaultPropertyKey('')
+      descriptionPropertyValue('')
+      descriptionPropertyFile('')
+      descriptionGroovyScript('')
+      descriptionGroovyScriptFile('')
+      descriptionBindings('')
+      descriptionGroovyClasspath('')
+      descriptionPropertyKey('')
+      javascriptFile('')
+      javascript('')
+      saveJSONParameterToFile(false)
+      multiSelectDelimiter('')
+    }
+  }

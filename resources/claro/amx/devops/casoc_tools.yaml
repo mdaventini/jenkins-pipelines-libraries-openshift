@@ -1,0 +1,75 @@
+---
+tool:
+  git:
+    installations:
+      -
+        home: git
+        name: Default
+  jdk:
+    installations:
+      -
+        name: JDK11
+        properties:
+          -
+            installSource:
+              installers:
+                -
+                  zip:
+                    subdir: jdk-11.0.8
+                    url: "http://trigo.claro.amx:8081/repository/local-claro-tools/java/jdk-11.0.8_linux-x64_bin.tar.gz"
+      -
+        name: JDK8
+        properties:
+          -
+            installSource:
+              installers:
+                -
+                  zip:
+                    subdir: jdk1.8.0_261
+                    url: "http://trigo.claro.amx:8081/repository/local-claro-tools/java/jdk-8u261-linux-x64.tar.gz"
+  maven:
+    installations:
+      -
+        name: M3-LTS
+        properties:
+          -
+            installSource:
+              installers:
+                -
+                  maven:
+                    id: "3.6.2"
+  nodejs:
+    installations:
+      -
+        name: NODEJS-LTS
+        properties:
+          -
+            installSource:
+              installers:
+                -
+                  nodeJSInstaller:
+                    id: "12.10.0"
+                    npmPackages: sonarqube-scanner
+                    npmPackagesRefreshHours: 72
+                -
+                  zip:
+                    subdir: node-v12.18.3-linux-x64
+                    url: "http://trigo.claro.amx:8081/repository/local-claro-tools/nodejs/node-v12.18.3-linux-x64.tar.xz"
+  pipelineMaven:
+    triggerDownstreamUponResultAborted: false
+    triggerDownstreamUponResultFailure: false
+    triggerDownstreamUponResultNotBuilt: false
+    triggerDownstreamUponResultSuccess: true
+    triggerDownstreamUponResultUnstable: false
+  sonarRunnerInstallation:
+    installations:
+      -
+        name: SONARSCANNER-LTS
+        properties:
+          -
+            installSource:
+              installers:
+                -
+                  zip:
+                    subdir: sonar-scanner-4.4.0.2170-linux
+                    url: "http://trigo.claro.amx:8081/repository/local-claro-tools/sonarqube-scanner/sonar-scanner-cli-4.4.0.2170-linux.zip"

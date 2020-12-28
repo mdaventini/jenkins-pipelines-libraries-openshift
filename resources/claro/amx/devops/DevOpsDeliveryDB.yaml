@@ -1,0 +1,23 @@
+---
+fileDsl: claro/amx/devops/pipelineJob.dsl
+nameJob: DevOpsDeliveryDB
+descriptionJob: |-
+  Obtain DB scripts based on Jira parameters
+sshRepo: ~
+sshCredentials: ~
+httpCredentials: ~
+branchesRepo: ~
+factoryScript: |-
+  @Library(['devops-openshift-libraries'])_
+  PipelineDeliveryDB('INFO')
+buildStrategies: ~
+scan: false
+parameters: |-
+  parameters {
+    stringParam {
+      name('JIRA_ID')
+      description('Id en Jira. Ej. LABRLS-1087')
+      defaultValue('LABRLS-1087')
+      trim(true)
+    }
+  }

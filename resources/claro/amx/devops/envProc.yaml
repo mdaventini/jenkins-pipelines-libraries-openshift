@@ -1,0 +1,45 @@
+---
+baseEnv:
+  - NLS_LANG=american_america.WE8ISO8859P1
+  - EPC_DISABLED=TRUE
+  - ORACLE_HOME=/oracle/app/oracle/product/client1232
+  - "PATH+EXTRA=/oracle/app/oracle/product/client1232/bin:/opt/IBM/xlC/13.1.2/bin/:/opt/freeware/bin"
+  - LIBPATH+EXTRA=/oracle/app/oracle/product/client1232/lib
+cti_ar:
+  - STEALTH_USR=STL
+  - STEALTH_PWD=stl
+  - ORACLE_SID=ARDPROD
+  - TWO_TASK=ARDPROD
+  - pais=ar
+cti_par:
+  - STEALTH_USR=STL
+  - STEALTH_PWD=stl
+  - ORACLE_SID=PYDPROD
+  - TWO_TASK=PYDPROD
+  - pais=py
+cti_uru:
+  - STEALTH_USR=STL
+  - STEALTH_PWD=stl
+  - ORACLE_SID=UYDSTL
+  - TWO_TASK=UYDSTL
+  - pais=uy
+fileConfig: claro/amx/devops/envProc.yaml
+oracleHome: /oracle/app/oracle/product/client1232
+'-ar':
+  - STEALTH_USR=STL
+  - STEALTH_PWD=stl
+  - ORACLE_SID=ARDPROD
+  - TWO_TASK=ARDPROD
+  - pais=ar
+'-py':
+  - STEALTH_USR=STL
+  - STEALTH_PWD=stl
+  - ORACLE_SID=PYDPROD
+  - TWO_TASK=PYDPROD
+  - pais=py
+'-uy':
+  - STEALTH_USR=STL
+  - STEALTH_PWD=stl
+  - ORACLE_SID=UYDSTL
+  - TWO_TASK=UYDSTL
+  - pais=uy

@@ -1,0 +1,29 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+<modelVersion>4.0.0</modelVersion>
+    <!-- The Basics -->
+    <groupId>devops.claro.amx</groupId>
+    <artifactId>devops-openshift-libraries</artifactId>
+    <version>1.0.0-SNAPSHOT</version>
+    <!-- Parent -->
+    <parent>
+        <groupId>claro.amx</groupId>
+        <artifactId>claro-groovy-parent</artifactId>
+        <version>1.0.0-SNAPSHOT</version>
+        <relativePath />
+    </parent>
+    <properties>
+        <!--Project-->
+        <bitbucketProjectKey>ic</bitbucketProjectKey>
+        <bitbucketRepo>IC/devops-openshift-libraries</bitbucketRepo>
+        <ciKey>devops-openshift-libraries</ciKey>
+    </properties>
+    <!-- More Project Information -->
+    <name>devops-openshift-libraries</name>
+    <description>Shared Libraries for Jenkins-OpenShift</description>
+    <!-- scm -->
+    <scm>
+        <connection>scm:git:ssh://git@${bitbucketServer}:7999/${bitbucketProjectKey}/${bitbucketRepo}.git</connection>
+        <developerConnection>scm:git:ssh://git@${bitbucketServer}:7999/${bitbucketProjectKey}/${bitbucketRepo}.git</developerConnection>
+        <url>http://${bitbucketServer}:7990/scm/${bitbucketProjectKey}/${bitbucketRepo}</url>
+    </scm>
+</project>

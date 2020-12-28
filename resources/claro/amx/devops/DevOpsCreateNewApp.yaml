@@ -1,0 +1,55 @@
+---
+fileDsl: claro/amx/devops/pipelineJob.dsl
+nameJob: DevOpsCreateNewApp
+descriptionJob: 'Crea o modifica jobs basado en una incidencia de Jira de tipo "Artefacto"'
+sshRepo: ~
+sshCredentials: ~
+httpCredentials: ~
+branchesRepo: ~
+factoryScript: |-
+  @Library(['devops-openshift-libraries'])_
+  PipelineCreateNewApp('INFO')
+buildStrategies: ~
+scan: false
+parameters: |-
+  parameters {
+    stringParam {
+      name('JIRA_ID')
+      description('Clave que identifica la incidencia en Jira de tipo "Artefacto"')
+      defaultValue('LABAR-226')
+      trim(true)
+    }
+    extendedChoice {
+      name('emailLeader')
+      description('e-mail del Líder Técnico (hidden).')
+      quoteValue(false)
+      type('PT_HIDDEN')
+      value('')
+      visibleItemCount(100)
+      projectName('')
+      propertyFile('')
+      groovyScript('')
+      groovyScriptFile('')
+      bindings('')
+      groovyClasspath('')
+      propertyKey('')
+      defaultValue('')
+      defaultPropertyFile('')
+      defaultGroovyScript('')
+      defaultGroovyScriptFile('')
+      defaultBindings('')
+      defaultGroovyClasspath('')
+      defaultPropertyKey('')
+      descriptionPropertyValue('')
+      descriptionPropertyFile('')
+      descriptionGroovyScript('')
+      descriptionGroovyScriptFile('')
+      descriptionBindings('')
+      descriptionGroovyClasspath('')
+      descriptionPropertyKey('')
+      javascriptFile('')
+      javascript('')
+      saveJSONParameterToFile(false)
+      multiSelectDelimiter('')
+    }
+  }

@@ -1,0 +1,81 @@
+---
+fileDsl: claro/amx/devops/pipelineJobWithCpsScmFlowDefinition.dsl
+nameJob: DevOpsCreateInfraConfig
+descriptionJob: "CreateInfraConfig"
+sshCredentials: ssh_jenkins-pc
+factoryScript: vars/jenkinsfile-create-infra-config
+parameters: |-
+  parameters {
+    stringParam {
+      name('JIRA_ID')
+      description('Jira Artifact ID')
+      defaultValue('DOATR-22')
+      trim(true)
+    }
+    extendedChoice {
+      name('templateTech')
+      description('Valid Options: java, nginx, nodejs')
+      quoteValue(false)
+      type('PT_HIDDEN')
+      value('')
+      visibleItemCount(100)
+      projectName('')
+      propertyFile('')
+      groovyScript('')
+      groovyScriptFile('')
+      bindings('')
+      groovyClasspath('')
+      propertyKey('')
+      defaultValue('java')
+      defaultPropertyFile('')
+      defaultGroovyScript('')
+      defaultGroovyScriptFile('')
+      defaultBindings('')
+      defaultGroovyClasspath('')
+      defaultPropertyKey('')
+      descriptionPropertyValue('')
+      descriptionPropertyFile('')
+      descriptionGroovyScript('')
+      descriptionGroovyScriptFile('')
+      descriptionBindings('')
+      descriptionGroovyClasspath('')
+      descriptionPropertyKey('')
+      javascriptFile('')
+      javascript('')
+      saveJSONParameterToFile(false)
+      multiSelectDelimiter('')
+    }
+    extendedChoice {
+      name('NAMESPACE_CLARO')
+      description('Valid Options: claro-apps')
+      quoteValue(false)
+      type('PT_HIDDEN')
+      value('')
+      visibleItemCount(100)
+      projectName('')
+      propertyFile('')
+      groovyScript('')
+      groovyScriptFile('')
+      bindings('')
+      groovyClasspath('')
+      propertyKey('')
+      defaultValue('ZERO')
+      defaultPropertyFile('')
+      defaultGroovyScript('')
+      defaultGroovyScriptFile('')
+      defaultBindings('')
+      defaultGroovyClasspath('')
+      defaultPropertyKey('')
+      descriptionPropertyValue('')
+      descriptionPropertyFile('')
+      descriptionGroovyScript('')
+      descriptionGroovyScriptFile('')
+      descriptionBindings('')
+      descriptionGroovyClasspath('')
+      descriptionPropertyKey('')
+      javascriptFile('')
+      javascript('')
+      saveJSONParameterToFile(false)
+      multiSelectDelimiter('')
+    }
+  }
